@@ -7,9 +7,11 @@ Created on Wed Jan 13 19:58:36 2021
 
 
 from flask_table import Table, Col, LinkCol
-
+"""
+below class is used to display location table. It's used in main.py
+"""
 class Results(Table):
-    ID = Col('ID', show=False)
+    ID = Col('ID')
     city_name = Col('city_name')
     planet_name = Col('planet_name')
     capacity = Col('capacity')

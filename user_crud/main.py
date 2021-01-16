@@ -1,22 +1,47 @@
+from __future__ import print_function
 import pymysql
 from app import app
 from tables import Results
 from tablestwo import Resultb
 from db_config import mysql
+import re
 from flask import flash, render_template, request, redirect
+
+import sys
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @app.route('/new_user')
 def add_user_view():
+	"""
+	:return: redircts to add.html
+	on click function, it triggers when "Add location" option is clicked in the home page
+	"""
 	return render_template('add.html')
 
 @app.route('/new_spaceship')
 def add_spaceship_view():
+	"""
+	:return: redircts to spaceship table page
+	on click function, it triggers when "Add spaceship" option is clicked in the home page
+	"""
 	return render_template('addspaceships.html')
+@app.route('/new_travel')
+def travel_view():
+	"""
+	:return: redircts to travel page
+	on click function, it triggers when "travel" option is clicked in the home page
 
+	"""
+
+	return render_template('travel.html')
 
 @app.route('/viewspaceships')
 def spaceships_view():
+	"""
+	:pram: none
+	:return: redircts to the spaceship table page
+	Displays all space ship in table form
+	"""
 	conn = None
 	cursor = None
 	conn = mysql.connect()
@@ -30,6 +55,11 @@ def spaceships_view():
 
 @app.route('/add', methods=['POST'])
 def add_user():
+	"""
+	 :param : None
+     :return: (redircts to the spaceship page)
+	 this function adds the location taken from html form user.html
+	"""
 	conn = None
 	cursor = None
 	try:		
@@ -61,6 +91,11 @@ def add_user():
 
 @app.route('/addspaceship', methods=['POST'])
 def add_spaceship():
+	"""
+	:param : None
+     :return: (redircts to the add spaceship page)
+	this function adds the spaceship taken from html form user.html
+	"""
 	conn = None
 	cursor = None
 	try:
@@ -82,7 +117,7 @@ def add_spaceship():
 			cursor.execute(sql, data)
 			conn.commit()
 			flash('Spaceship added successfully!')
-			return redirect('/viewspaceships')
+			return redirect('/addspaceship')
 		else:
 			return 'Error while adding user'
 	except Exception as e:
@@ -93,6 +128,11 @@ def add_spaceship():
 		
 @app.route('/')
 def users():
+	"""
+	:param : None
+    :return: (redircts to the home page)
+		this function displays all the locations
+		"""
 	conn = None
 	cursor = None
 	try:
@@ -113,6 +153,11 @@ def users():
 def edit_view_spaceship(id):
 	conn = None
 	cursor = None
+	"""
+	:param : None
+    :return: (redircts to the editspaceship.html page)
+	this function is used to pass the ID when edit button is clicked when spaceship table is viewed.
+	"""
 	try:
 		conn = mysql.connect()
 		cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -132,6 +177,11 @@ def edit_view_spaceship(id):
 def edit_view(id):
 	conn = None
 	cursor = None
+	"""
+	 :param : None
+     :return: (redircts to the travel.html page)
+	this function is used to pass the ID when edit button is clicked when location table is viewed.
+	"""
 	try:
 		conn = mysql.connect()
 		cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -151,6 +201,11 @@ def edit_view(id):
 def update_user():
 	conn = None
 	cursor = None
+	"""
+	 :param : None
+     :return: (redircts to the location table page)
+	 code for update form of locations
+	"""
 	try:
 		_incity = request.form['inputCity']
 		_inplanet = request.form['inputPlanet']
@@ -181,6 +236,11 @@ def update_user():
 def update_spaceship():
  conn = None
  cursor = None
+ """
+  :param : None
+  :return: (redircts to the spaceship page)
+ Update status of spaceships
+ """
  _inStatus = request.form['inputStatus']
  _id = request.form['id']
  if _inStatus and _id and request.method == 'POST':
@@ -196,8 +256,102 @@ def update_spaceship():
  else:
 			return 'Error while updating user'
 
+
+@app.route('/travelpaceship', methods=['POST'])
+def travel_spaceship():
+
+ conn = None
+ cursor = None
+ """
+ :param : None
+ :return: (redircts to the travel.html page)
+ Method used for travel form. 
+ First it uses select query to check capacity and status of the spaceship and location. 
+ Following checks are applied
+ first it checks if the status is operational
+ than it checks if the capacity is not equal to zero
+ If above condition passed than following changes are made
+ (1) Capacity from the departed location increases
+ (2) Capacity from the arrival location decreases by 1
+ (3) Current location of the spaceship is chanegd by assigning the forgien key
+ """
+ _idspace = request.form['spaceID']
+ _idlocation = request.form['locationID']
+ if _idspace and _idlocation and request.method == 'POST':
+
+
+			sqlcapacity = "SELECT capacity from locations where id=%s"
+			sqlstatus= "SELECT status from spaceship where spaceid=%s"
+			data = (_idlocation,)
+			datat=(_idspace,)
+			conn = mysql.connect()
+			connt=mysql.connect()
+			cursor = conn.cursor()
+			cusoro=connt.cursor()
+			cursor.execute(sqlcapacity, data)
+			cusoro.execute(sqlstatus,datat)
+			datarrayt=cursor.fetchall()
+			dataarray = cusoro.fetchall()
+			stat=str(dataarray)
+			cap=str(datarrayt)
+			d=re.findall(r'\d+', cap)
+			print((d[0]), file=sys.stdout)
+			conn.commit()
+			if( not 'operational' in stat):
+				flash('Spaceship not operational')
+				return redirect('/new_travel')
+
+			elif '0' in cap:
+				flash('No capacity left!')
+				return redirect('/new_travel')
+			else:
+				sql = "SELECT locationid from spaceship where spaceid=%s"
+
+				data = (_idspace,)
+				conn = mysql.connect()
+				cursor = conn.cursor()
+				cursor.execute(sql, data)
+				datarrayt = cursor.fetchall()
+
+
+				cap = str(datarrayt)
+				d = re.findall(r'\d+', cap)
+				sqltwo ="UPDATE locations SET capacity=capacity+1 WHERE ID=%s"
+				datat = (d[0],)
+				connb = mysql.connect()
+				cursorb = connb.cursor()
+				cursorb.execute(sqltwo,datat)
+				connb.commit()
+
+				sql = "UPDATE locations SET capacity=capacity-1 WHERE ID=%s"
+				data = (_idlocation,)
+				conn = mysql.connect()
+				cursor = conn.cursor()
+				cursor.execute(sql, data)
+				conn.commit()
+				sql = "UPDATE spaceship SET locationid=%s WHERE spaceid=%s"
+				data = (_idlocation,_idspace,)
+				conn = mysql.connect()
+				cursor = conn.cursor()
+				cursor.execute(sql, data)
+				conn.commit()
+				flash('Spaceship travelled please view the tables to check changes')
+				return redirect('/new_travel')
+
+
+			flash('User updated successfully!')
+			return redirect('/new_travel')
+ else:
+			return 'Error while updating user'
+
+
 @app.route('/deletespaceship/<int:id>')
 def delete_user(id):
+	"""
+	:param id: (taken from
+	:return: (HTML homepage)
+	deletes location given id
+	"""
 	conn = None
 	cursor = None
 	try:
@@ -216,6 +370,12 @@ def delete_user(id):
 
 @app.route('/delete/<int:id>')
 def delete_spaceship_user(id):
+	"""
+
+	:param id:  (id of the space ship)
+	:return: (redirects to the space ship table page)
+    removes the spaceship given the id.
+	"""
 	conn = None
 	cursor = None
 	try:

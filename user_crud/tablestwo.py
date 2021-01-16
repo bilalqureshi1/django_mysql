@@ -1,8 +1,10 @@
 
 from flask_table import Table, Col, LinkCol
-
+"""
+below class is used to display spaceship table. It's used in main.py
+"""
 class Resultb(Table):
-    SPACEID = Col('spaceid', show=False)
+    spaceid = Col('spaceid')
     name = Col('name')
     model = Col('model')
     status = Col('status')
