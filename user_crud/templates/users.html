@@ -1,8 +1,11 @@
 <doctype html>
 <title>List of users - Python Flask MySQL CRUD</title>
 
-<p><a href="{{ url_for('.add_user_view') }}"> Add User </a></p>
-
+<p><a href="{{ url_for('.add_user_view') }}"> Add Locations </a></p>
+<p><a href="{{ url_for('.add_spaceship_view') }}"> Add Space Ships </a></p>
+<p><a href="{{ url_for('.add_user_view') }}"> Travel </a></p>
+<p><a href="{{ url_for('.spaceships_view') }}"> Show Space Ships </a></p>
+<p>All Locations:</p>
 <p>
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}

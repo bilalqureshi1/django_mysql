@@ -1,0 +1,20 @@
+<doctype html>
+<title>Edit User - Python Flask MySQL CRUD</title>
+<h2>Edit User</h2>
+<form method="post" action="/update">
+    <dl>
+		<p>
+			<input name="inputSpaceID" value="{{ row['city_name'] }}" type="Space Ship ID that has to travel" placeholder="City Name" autocomplete="off" required>
+		</p>
+		<p>
+			<input name="locationID" value=" {{ row['planet_name'] }}" placeholder="Location ID of where it has to land" autocomplete="off" required>
+		</p>
+		<p>
+			<input name="inputCapacity" value="{{ row['capacity'] }}" placeholder="Capacity" autocomplete="off" required>
+		</p>
+    </dl>
+    <p>
+		<input name="id" value="{{ row['ID'] }}" type="hidden">
+		<input type="submit" value="Submit">
+	</p>
+</form>
