@@ -1,20 +1,29 @@
 <doctype html>
 <title>Edit User - Python Flask MySQL CRUD</title>
-<h2>Edit User</h2>
-<form method="post" action="/update">
+<h2>Travel</h2>
+<form method="post" action="/travelpaceship">
     <dl>
 		<p>
-			<input name="inputSpaceID" value="{{ row['city_name'] }}" type="Space Ship ID that has to travel" placeholder="City Name" autocomplete="off" required>
+			<input name="spaceID"   placeholder="Space ID" autocomplete="off" required>
 		</p>
 		<p>
-			<input name="locationID" value=" {{ row['planet_name'] }}" placeholder="Location ID of where it has to land" autocomplete="off" required>
+			<input name="locationID"  placeholder="Location ID of where it has to land" autocomplete="off" required>
 		</p>
 		<p>
-			<input name="inputCapacity" value="{{ row['capacity'] }}" placeholder="Capacity" autocomplete="off" required>
-		</p>
-    </dl>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul class=flashes>
+		{% for message in messages %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+</p>
     <p>
-		<input name="id" value="{{ row['ID'] }}" type="hidden">
+		
 		<input type="submit" value="Submit">
 	</p>
+    </dl>
+
 </form>
