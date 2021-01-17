@@ -24,3 +24,11 @@ pip install regex <br/>
 pip install Flask <br/>
 pip install Flask-MySQL <br/>
 pip install Flask-Table <br/>
+
+### Database deployment
+To make it easier for you to deploy my database you can simply follow the below steps I will also add them in readme file. <br/>
+(1) Download XAMPP from https://www.apachefriends.org/download.html  for your OS <br/>
+(2) Than start XAMPP and click on start mySQL and as well as apache. And click on admin button of mysql. <br/>
+(3) Once you arrive at the dashboard create a new database called "stomble" <br/>
+(4) Go to the sql tab and copy paste stumble.sql to create and which will create and populate all the table <br/>
+(5) now run the python code, you shouldn't have a need to edit credentials. <br/>
