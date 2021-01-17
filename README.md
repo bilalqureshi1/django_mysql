@@ -13,6 +13,8 @@ Please note the following: <br/>
 
 #### Environment needed python 3.0 and above
 Install the following libraries and type this in your windows command prompt or mac/linux terminal <br/>
+You have to run the code by typing python main.py <br/>
+when you are in user_crud folder. This can be done with both windows and mac terminal. <br/>
 In order to run the code please install these libraries first. <br/>
 Please install by typing this in your terminal one by one. <br/>
 pip install app <br/>
