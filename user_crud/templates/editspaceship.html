@@ -1,7 +1,7 @@
 <doctype html>
 <title>Edit User - Python Flask MySQL CRUD</title>
 <h2>Edit User</h2>
-<p> Change the status by typing decomissioned, maintenance, operational
+<p> Change the status by typing decommissioned, maintenance, operational copy these words from here exactly like this
 <form method="post" action="/updatespaceship">
     <dl>
 		<p>
@@ -11,6 +11,7 @@
 		<input name="id" value="{{ row['SPACEID'] }}" type="hidden">
 		<input type="submit" value="Submit">
 	</p>
+	
     </dl>
-    
+  
 </form>
