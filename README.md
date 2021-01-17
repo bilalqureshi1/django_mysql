@@ -1,5 +1,6 @@
 # stomble assignment bilal qureshi <br/>
  ## Steps to run the code <br/>
+ #### I followed PEP 8 python format as much as I can. You can see the comments for better understanding of the code. I am also adding an API documentation for your ease
 Stomble Assignment made in Flask Python <br/>
 Please note the following: <br/>
 1. The database is made on the local server on xampp. I will add the db file <br/>
