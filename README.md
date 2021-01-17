@@ -11,3 +11,13 @@ Please note the following: <br/>
 5. How ever I will give the video demonstration if the code is not working on PC other than mine.<br/>
 
 
+#### Environment needed python 3.0 and above
+Install the following libraries and type this in your windows command prompt or mac/linux terminal
+In order to run the code please install these libraries first.
+Please install by typing this in your terminal one by one.
+pip install app
+pip install PyMySQL
+pip install regex
+pip install Flask
+pip install Flask-MySQL
+pip install Flask-Table
