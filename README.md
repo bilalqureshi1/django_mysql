@@ -12,6 +12,7 @@ Please note the following: <br/>
 
 
 #### Environment needed python 3.0 and above
+I have also made a requirment.txt file please type  pip install -r requirements.txt  to install all libraries <br/>
 Install the following libraries and type this in your windows command prompt or mac/linux terminal <br/>
 You have to run the code by typing python main.py <br/>
 when you are in user_crud folder. This can be done with both windows and mac terminal. <br/>
