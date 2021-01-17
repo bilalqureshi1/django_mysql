@@ -12,12 +12,12 @@ Please note the following: <br/>
 
 
 #### Environment needed python 3.0 and above
-Install the following libraries and type this in your windows command prompt or mac/linux terminal
-In order to run the code please install these libraries first.
-Please install by typing this in your terminal one by one.
-pip install app
-pip install PyMySQL
-pip install regex
-pip install Flask
-pip install Flask-MySQL
-pip install Flask-Table
+Install the following libraries and type this in your windows command prompt or mac/linux terminal <br/>
+In order to run the code please install these libraries first. <br/>
+Please install by typing this in your terminal one by one. <br/>
+pip install app <br/>
+pip install PyMySQL <br/>
+pip install regex <br/>
+pip install Flask <br/>
+pip install Flask-MySQL <br/>
+pip install Flask-Table <br/>
