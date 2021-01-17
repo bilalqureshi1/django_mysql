@@ -84,7 +84,11 @@ def add_user():
 		else:
 			return 'Error while adding user'
 	except Exception as e:
-		print(e)
+		flash('Please enter another ID')
+		return redirect('/')
+	except Exception as TypeError:
+		flash('Please enter another ID')
+		return redirect('/')
 	finally:
 		cursor.close() 
 		conn.close()
@@ -110,18 +114,23 @@ def add_spaceship():
 			#do not save password as a plain text
 
 			# save edits
-			sql = "INSERT INTO spaceship (spaceid, locationid, name,model,status) VALUES(%s, %s, %s,%s,%s)"
-			data = (_spaceid, _locationid, _name,_model,_status,)
-			conn = mysql.connect()
-			cursor = conn.cursor()
-			cursor.execute(sql, data)
-			conn.commit()
-			flash('Spaceship added successfully!')
-			return redirect('/addspaceship')
+			try:
+			 	sql = "INSERT INTO spaceship (spaceid, locationid, name,model,status) VALUES(%s, %s, %s,%s,%s)"
+			 	data = (_spaceid, _locationid, _name,_model,_status,)
+			 	conn = mysql.connect()
+			 	cursor = conn.cursor()
+			 	cursor.execute(sql, data)
+			 	conn.commit()
+			 	flash('Spaceship added successfully!')
+			 	return redirect('/')
+			except Exception as TypeError:
+				flash('You have entered invalid locationid or spaceid either spaceid is taken or locationid dosnt exist')
+				return redirect('/')
 		else:
 			return 'Error while adding user'
 	except Exception as e:
 		print(e)
+
 	finally:
 		cursor.close()
 		conn.close()
@@ -222,7 +231,7 @@ def update_user():
 			cursor = conn.cursor()
 			cursor.execute(sql, data)
 			conn.commit()
-			flash('User updated successfully!')
+			flash('location updated successfully!')
 			return redirect('/')
 		else:
 			return 'Error while updating user'
@@ -242,19 +251,21 @@ def update_spaceship():
  Update status of spaceships
  """
  _inStatus = request.form['inputStatus']
+ _inStatus=_inStatus.lower()
  _id = request.form['id']
  if _inStatus and _id and request.method == 'POST':
 
-			sql = "UPDATE spaceship SET status=%s WHERE SPACEID=%s"
-			data = (_inStatus, _id,)
-			conn = mysql.connect()
-			cursor = conn.cursor()
-			cursor.execute(sql, data)
-			conn.commit()
-			flash('User updated successfully!')
-			return redirect('/viewspaceships')
+     sql = "UPDATE spaceship SET status=%s WHERE SPACEID=%s"
+     data = (_inStatus, _id,)
+     conn = mysql.connect()
+     cursor = conn.cursor()
+     cursor.execute(sql, data)
+     conn.commit()
+     flash('User updated successfully!')
+     return redirect('/viewspaceships')
+
  else:
-			return 'Error while updating user'
+	    return 'Error while updating user'
 
 
 @app.route('/travelpaceship', methods=['POST'])
@@ -273,7 +284,7 @@ def travel_spaceship():
  If above condition passed than following changes are made
  (1) Capacity from the departed location increases
  (2) Capacity from the arrival location decreases by 1
- (3) Current location of the spaceship is chanegd by assigning the forgien key
+ (3) Current location of the spaceship is chaneged by assigning the forgien key
  """
  _idspace = request.form['spaceID']
  _idlocation = request.form['locationID']
@@ -361,8 +372,13 @@ def delete_user(id):
 		conn.commit()
 		flash('Location deleted successfully!')
 		return redirect('/')
+	except TypeError:
+		flash("Can't delete this location please delete all spaceships from it first from the spaceship page. This is due to forgien key constraint")
+		return redirect('/')
 	except Exception as e:
-		print(e)
+		flash("Can't delete this location please delete all spaceships from it first from the spaceship page. This is due to forgien key constraint")
+		return redirect('/')
+
 	finally:
 		cursor.close() 
 		conn.close()

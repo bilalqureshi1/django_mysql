@@ -17,3 +17,4 @@ class Results(Table):
     capacity = Col('capacity')
     edit = LinkCol('Edit', 'edit_view', url_kwargs=dict(id='ID'))
     delete = LinkCol('Delete', 'delete_user', url_kwargs=dict(id='ID'))
+
