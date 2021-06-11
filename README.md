@@ -1,4 +1,4 @@
-# stomble assignment bilal qureshi <br/>
+# Django with mySQL integration <br/>
  ## Steps to run the code,  I have also added them in the documentation <br/>
  
  #### I followed PEP 8 python format as much as I can. You can see the comments for better understanding of the code. I am also adding an API documentation for your ease
